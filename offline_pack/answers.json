@@ -1,0 +1,35 @@
+{
+  "meta": {
+    "title": "Quiz Answers - Grade 9 Mathematics",
+    "subject": "mathematics",
+    "grade": 9
+  },
+  "answers": {
+    "Q1_algebra_basics": {
+      "Q1_1": {"answer": "2x + 5", "explanation": "An algebraic expression contains variables."},
+      "Q1_2": {"answer": "3x + 7", "explanation": "Three times a number is 3x, increased by 7 means +7."},
+      "Q1_3": {"answer": "25", "explanation": "2(4)² - 3(4) + 5 = 32 - 12 + 5 = 25"},
+      "Q1_4": {"answer": "2x + 7y", "explanation": "Combine: 3x - x = 2x, 2y + 5y = 7y"},
+      "Q1_5": {"answer": "false", "explanation": "x² and x are not like terms - different powers"}
+    },
+    "Q2_solving_equations": {
+      "Q2_1": {"answer": "x = 7", "explanation": "x + 8 = 15 → x = 15 - 8 = 7"},
+      "Q2_2": {"answer": "x = 7", "explanation": "3x = 21 → x = 21 ÷ 3 = 7"},
+      "Q2_3": {"answer": "x = 8", "explanation": "2x - 5 = 11 → 2x = 16 → x = 8"},
+      "Q2_4": {"answer": "x = 4", "explanation": "4(x + 3) = 28 → 4x + 12 = 28 → 4x = 16 → x = 4"},
+      "Q2_5": {"answer": "x = 7", "explanation": "2x + 5 = x + 12 → x + 5 = 12 → x = 7"}
+    },
+    "Q3_quadratics": {
+      "Q3_1": {"answer": "x² + 6x + 8", "explanation": "FOIL: (x+2)(x+4) = x² + 6x + 8"},
+      "Q3_2": {"answer": "(x + 3)(x + 4)", "explanation": "Factor: 3 and 4 multiply to 12, add to 7"},
+      "Q3_3": {"answer": "(x - 2)(x - 3)", "explanation": "Factor: -2 and -3 multiply to 6, add to -5"}
+    },
+    "Q4_word_problems": {
+      "Q4_1": {"answer": "14", "explanation": "A = S + 5, A + S = 23 → S = 9, A = 14"},
+      "Q4_2": {"answer": "12", "explanation": "l = 2w, 2(2w) + 2w = 36 → w = 6, l = 12"}
+    },
+    "Q5_systems": {
+      "Q5_1": {"answer": "x=5, y=3", "explanation": "Add equations to get x = 5, then substitute to get y = 3"}
+    }
+  }
+}

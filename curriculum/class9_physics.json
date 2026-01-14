@@ -1,0 +1,119 @@
+{
+  "grade": "9",
+  "subject": "physics",
+  "board": "national",
+  "curriculum_standards": "Pakistan National Curriculum",
+  "chapters": [
+    {
+      "number": 1,
+      "name": "Kinematics - Motion in One Dimension",
+      "estimatedHours": 10,
+      "topics": [
+        {
+          "name": "speed_velocity_acceleration",
+          "description": "Understanding motion parameters",
+          "difficulty": "beginner",
+          "estimatedTime": 150,
+          "explanation": "Speed measures how fast an object is moving (distance/time). Velocity includes both speed and direction. Acceleration measures how quickly velocity changes. These are fundamental concepts in studying motion.",
+          "examples": [
+            "A car travels 100 km in 2 hours. Its speed is 100/2 = 50 km/h.",
+            "If the car is moving at 50 km/h towards the north, its velocity is 50 km/h north.",
+            "If the car speeds up from 50 km/h to 80 km/h in 10 seconds, it has positive acceleration."
+          ],
+          "objectives": [
+            "Define speed, velocity, and acceleration",
+            "Calculate average speed and velocity",
+            "Understand the difference between distance and displacement",
+            "Solve basic kinematics problems"
+          ],
+          "prerequisites": []
+        },
+        {
+          "name": "equations_of_motion",
+          "description": "Mathematical relationships for uniformly accelerated motion",
+          "difficulty": "intermediate",
+          "estimatedTime": 180,
+          "explanation": "The equations of motion relate the five kinematic variables: initial velocity (u), final velocity (v), acceleration (a), time (t), and displacement (s). These equations allow us to solve complex motion problems.",
+          "examples": [
+            "v = u + at (velocity equation)",
+            "s = ut + ½at² (displacement equation)",
+            "v² = u² + 2as (velocity-displacement relation)",
+            "A car starts from rest (u=0) and accelerates at 2 m/s² for 5 seconds. Final velocity: v = 0 + 2(5) = 10 m/s"
+          ],
+          "objectives": [
+            "Memorize the three equations of motion",
+            "Select appropriate equation for a given problem",
+            "Solve motion problems using equations",
+            "Graph motion relationships"
+          ],
+          "prerequisites": ["speed_velocity_acceleration"]
+        },
+        {
+          "name": "free_fall_projectile_motion",
+          "description": "Motion under gravity",
+          "difficulty": "advanced",
+          "estimatedTime": 200,
+          "explanation": "Free fall is motion under the influence of gravity alone, with acceleration g = 9.8 m/s² downward. Projectile motion is motion under gravity with an initial horizontal velocity component.",
+          "examples": [
+            "An object dropped from 100m height. Using s = ½gt², we find time = √(2×100/9.8) ≈ 4.5 seconds.",
+            "A ball thrown horizontally from a 50m building lands 100m away. We can calculate initial velocity and flight time.",
+            "For projectile motion: horizontal displacement = v₀ₓ × t, vertical displacement = ½gt²"
+          ],
+          "objectives": [
+            "Analyze free fall problems",
+            "Solve projectile motion problems",
+            "Understand trajectory equations",
+            "Apply to real-world scenarios"
+          ],
+          "prerequisites": ["equations_of_motion"]
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "name": "Forces and Newton's Laws",
+      "estimatedHours": 12,
+      "topics": [
+        {
+          "name": "newton_first_law",
+          "description": "Law of Inertia",
+          "difficulty": "beginner",
+          "estimatedTime": 120,
+          "explanation": "Newton's First Law states that an object at rest stays at rest, and an object in motion stays in motion unless acted upon by an external force. This is called inertia - the resistance of an object to change its state of motion.",
+          "examples": [
+            "A book on a table stays there because no force is pushing it.",
+            "A car moving at constant velocity continues moving unless the brakes (external force) are applied.",
+            "In space with no gravity or friction, an object would move forever at constant velocity."
+          ],
+          "objectives": [
+            "Understand concept of inertia",
+            "Identify external forces",
+            "Explain equilibrium",
+            "Solve equilibrium problems"
+          ],
+          "prerequisites": []
+        },
+        {
+          "name": "newton_second_law",
+          "description": "F = ma",
+          "difficulty": "intermediate",
+          "estimatedTime": 160,
+          "explanation": "Newton's Second Law relates force, mass, and acceleration: F = ma. A net force applied to an object causes acceleration proportional to the force and inversely proportional to the mass.",
+          "examples": [
+            "A 2 kg object with 10 N force applied: a = F/m = 10/2 = 5 m/s²",
+            "Doubling the force doubles the acceleration.",
+            "Doubling the mass halves the acceleration.",
+            "Weight is the gravitational force: W = mg = 2 × 9.8 = 19.6 N"
+          ],
+          "objectives": [
+            "Apply F = ma to calculate force, mass, or acceleration",
+            "Draw force diagrams",
+            "Solve problems with multiple forces",
+            "Understand weight vs mass"
+          ],
+          "prerequisites": ["newton_first_law"]
+        }
+      ]
+    }
+  ]
+}

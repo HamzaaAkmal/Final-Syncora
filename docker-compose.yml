@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: syncora-backend
+    volumes:
+      - ./:/app:rw
+      - ./data:/app/data:rw
+    ports:
+      - "8001:8001"
+    environment:
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    container_name: syncora-frontend
+    volumes:
+      - ./web:/app:rw
+    ports:
+      - "3782:3782"
+    environment:
+      - NEXT_PUBLIC_API_BASE=http://localhost:8001
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+# Optional: you can add more services (e.g., a separate vector DB service) if required.

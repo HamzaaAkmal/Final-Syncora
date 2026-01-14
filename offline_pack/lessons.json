@@ -1,0 +1,174 @@
+{
+  "meta": {
+    "title": "1-Day Learning Pack - Grade 9 Mathematics",
+    "grade": 9,
+    "subject": "mathematics",
+    "language": "en",
+    "duration": "480 minutes",
+    "lessons": 5,
+    "quizzes": 5,
+    "offline_mode": true,
+    "created_date": "2026-01-10"
+  },
+  "lessons": [
+    {
+      "lesson_id": "L1_intro_algebra",
+      "title": "Introduction to Algebra",
+      "duration_minutes": 90,
+      "order": 1,
+      "content": {
+        "introduction": "Learn the basics of algebra - a fundamental branch of mathematics that uses variables and equations to solve problems.",
+        "topics": [
+          {
+            "title": "What is Algebra?",
+            "content": "Algebra is the mathematics of general numbers represented by letters (variables). It helps us solve problems where we don't know all the values."
+          },
+          {
+            "title": "Variables and Constants",
+            "content": "A variable is a letter that represents an unknown number. A constant is a number that has a fixed value. In the expression 2x + 5, x is a variable and 2, 5 are constants."
+          },
+          {
+            "title": "Writing Algebraic Expressions",
+            "content": "We can translate words into algebraic expressions: 'twice a number' becomes 2x, 'three more than a number' becomes x + 3, 'a number decreased by 7' becomes x - 7."
+          }
+        ]
+      },
+      "examples": [
+        {
+          "problem": "Write an algebraic expression for: 'Five less than a number'",
+          "solution": "Let x be the number. Five less than the number is x - 5."
+        },
+        {
+          "problem": "Write an algebraic expression for: 'The sum of a number and 8'",
+          "solution": "Let x be the number. The sum of the number and 8 is x + 8."
+        }
+      ],
+      "key_points": [
+        "Variables represent unknown quantities",
+        "Expressions combine variables, constants, and operations",
+        "Order of operations (PEMDAS/BODMAS) applies to algebraic expressions"
+      ]
+    },
+    {
+      "lesson_id": "L2_linear_equations",
+      "title": "Solving Linear Equations",
+      "duration_minutes": 100,
+      "order": 2,
+      "content": {
+        "introduction": "Learn how to solve equations with one variable by performing inverse operations.",
+        "topics": [
+          {
+            "title": "One-Step Equations",
+            "content": "Addition/subtraction: To undo +3, subtract 3 from both sides. Multiplication/division: To undo ×2, divide both sides by 2."
+          },
+          {
+            "title": "Two-Step Equations",
+            "content": "First undo addition/subtraction, then undo multiplication/division. Always work backwards from the answer."
+          },
+          {
+            "title": "Multi-Step Equations",
+            "content": "Use distributive property if needed, combine like terms, then solve using inverse operations."
+          }
+        ]
+      },
+      "examples": [
+        {
+          "problem": "Solve: x + 5 = 12",
+          "solution": "Subtract 5 from both sides: x = 12 - 5 = 7"
+        },
+        {
+          "problem": "Solve: 2x - 3 = 7",
+          "solution": "Add 3: 2x = 10. Divide by 2: x = 5"
+        },
+        {
+          "problem": "Solve: 3(x + 2) = 15",
+          "solution": "Distribute: 3x + 6 = 15. Subtract 6: 3x = 9. Divide: x = 3"
+        }
+      ],
+      "key_points": [
+        "What you do to one side, you must do to the other",
+        "Use inverse operations to isolate the variable",
+        "Always check your solution by substituting back"
+      ]
+    },
+    {
+      "lesson_id": "L3_expanding_factoring",
+      "title": "Expanding and Factoring Quadratics",
+      "duration_minutes": 110,
+      "order": 3,
+      "content": {
+        "introduction": "Learn to expand and factor quadratic expressions - essential for solving quadratic equations.",
+        "topics": [
+          {
+            "title": "FOIL Method",
+            "content": "First, Outer, Inner, Last - multiply terms in each position when expanding (a+b)(c+d)"
+          },
+          {
+            "title": "Factoring Quadratics",
+            "content": "Find two numbers that multiply to give 'c' and add to give 'b' in ax² + bx + c"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "problem": "Expand: (x + 2)(x + 3)",
+          "solution": "F: x·x = x², O: x·3 = 3x, I: 2·x = 2x, L: 2·3 = 6. Result: x² + 5x + 6"
+        },
+        {
+          "problem": "Factor: x² + 5x + 6",
+          "solution": "Find two numbers: 2 and 3 (multiply to 6, add to 5). Result: (x + 2)(x + 3)"
+        }
+      ]
+    },
+    {
+      "lesson_id": "L4_word_problems",
+      "title": "Solving Word Problems",
+      "duration_minutes": 90,
+      "order": 4,
+      "content": {
+        "introduction": "Learn to translate real-world situations into equations and solve them.",
+        "topics": [
+          {
+            "title": "Steps to Solve Word Problems",
+            "content": "1) Read carefully and identify what you're looking for. 2) Define variables. 3) Set up equation. 4) Solve. 5) Check if answer makes sense."
+          },
+          {
+            "title": "Common Problem Types",
+            "content": "Age problems, distance/rate/time problems, mixture problems, number problems"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "problem": "A rectangle has length 3 more than its width. If the perimeter is 26, find the dimensions.",
+          "solution": "Let w = width, then l = w + 3. Perimeter = 2l + 2w = 26. 2(w+3) + 2w = 26. 4w + 6 = 26. 4w = 20. w = 5, l = 8"
+        }
+      ]
+    },
+    {
+      "lesson_id": "L5_systems_equations",
+      "title": "Systems of Linear Equations",
+      "duration_minutes": 90,
+      "order": 5,
+      "content": {
+        "introduction": "Learn to solve problems with multiple equations and multiple unknowns.",
+        "topics": [
+          {
+            "title": "Substitution Method",
+            "content": "Solve one equation for a variable, substitute into the other equation."
+          },
+          {
+            "title": "Elimination Method",
+            "content": "Multiply equations to make coefficients equal, then add or subtract to eliminate a variable."
+          }
+        ]
+      },
+      "examples": [
+        {
+          "problem": "Solve: x + y = 5 and 2x - y = 4",
+          "solution": "Add equations: 3x = 9, so x = 3. Substitute: 3 + y = 5, so y = 2"
+        }
+      ]
+    }
+  ]
+}

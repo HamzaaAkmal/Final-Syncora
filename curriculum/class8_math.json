@@ -1,0 +1,98 @@
+{
+  "grade": "8",
+  "subject": "mathematics",
+  "board": "national",
+  "curriculum_standards": "Pakistan National Curriculum",
+  "chapters": [
+    {
+      "number": 1,
+      "name": "Fundamentals of Algebra",
+      "estimatedHours": 8,
+      "topics": [
+        {
+          "name": "introduction_to_algebra",
+          "description": "Basic concepts and applications of algebra",
+          "difficulty": "beginner",
+          "estimatedTime": 120,
+          "explanation": "Algebra is the branch of mathematics that uses letters (variables) to represent unknown values. In this unit, we learn how to use variables to write expressions and equations that help us solve real-world problems.",
+          "examples": [
+            "If x represents a number, then x + 5 represents 5 more than that number.",
+            "The equation 2x = 10 means we need to find the value of x such that 2 times x equals 10. The answer is x = 5.",
+            "To solve word problems, we often translate them into algebraic equations."
+          ],
+          "objectives": [
+            "Understand what algebra is and why it's useful",
+            "Use variables to represent unknown values",
+            "Write algebraic expressions",
+            "Solve simple equations"
+          ],
+          "prerequisites": []
+        },
+        {
+          "name": "linear_equations",
+          "description": "Solving equations with one variable",
+          "difficulty": "intermediate",
+          "estimatedTime": 180,
+          "explanation": "A linear equation is an equation where the highest power of the variable is 1. We solve linear equations by performing the same operation on both sides until we isolate the variable.",
+          "examples": [
+            "Solve: 3x + 5 = 14. First subtract 5 from both sides: 3x = 9. Then divide both sides by 3: x = 3.",
+            "Solve: 2(x + 3) = 16. Use distributive property: 2x + 6 = 16. Subtract 6: 2x = 10. Divide: x = 5.",
+            "Real example: A ticket costs $15 and you have $60. How many tickets can you buy? Let x be the number of tickets: 15x = 60, so x = 4."
+          ],
+          "objectives": [
+            "Solve one-step equations",
+            "Solve two-step equations",
+            "Solve multi-step equations",
+            "Apply equations to word problems"
+          ],
+          "prerequisites": ["introduction_to_algebra"]
+        },
+        {
+          "name": "quadratic_expressions",
+          "description": "Factoring and expanding quadratic expressions",
+          "difficulty": "intermediate",
+          "estimatedTime": 200,
+          "explanation": "Quadratic expressions are expressions where the highest power of the variable is 2. We learn how to expand (multiply out) and factor (break down) these expressions.",
+          "examples": [
+            "Expand: (x + 2)(x + 3) = x² + 3x + 2x + 6 = x² + 5x + 6",
+            "Factor: x² + 5x + 6 = (x + 2)(x + 3)",
+            "Real application: The area of a rectangle with dimensions (x + 2) by (x + 3) is x² + 5x + 6 square units."
+          ],
+          "objectives": [
+            "Expand quadratic expressions using FOIL",
+            "Factor quadratic expressions",
+            "Solve quadratic equations by factoring",
+            "Apply to area problems"
+          ],
+          "prerequisites": ["introduction_to_algebra"]
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "name": "Sequences and Series",
+      "estimatedHours": 6,
+      "topics": [
+        {
+          "name": "arithmetic_sequences",
+          "description": "Patterns that change by a constant amount",
+          "difficulty": "intermediate",
+          "estimatedTime": 120,
+          "explanation": "An arithmetic sequence is a list of numbers where the difference between consecutive terms is always the same. This constant difference is called the common difference.",
+          "examples": [
+            "The sequence 2, 5, 8, 11, 14, ... has a common difference of 3.",
+            "The sequence 10, 9, 8, 7, 6, ... has a common difference of -1.",
+            "The general term formula: aₙ = a₁ + (n-1)d, where a₁ is the first term and d is the common difference."
+          ],
+          "objectives": [
+            "Identify arithmetic sequences",
+            "Find the common difference",
+            "Find any term in the sequence",
+            "Sum arithmetic series"
+          ],
+          "prerequisites": ["linear_equations"]
+        }
+      ]
+    }
+  ]
+}

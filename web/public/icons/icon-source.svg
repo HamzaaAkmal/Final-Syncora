@@ -1,0 +1,52 @@
+<!-- 
+  Syncora App Icon - SVG Source
+  Use this to generate PNG icons at various sizes:
+  72x72, 96x96, 128x128, 144x144, 152x152, 192x192, 384x384, 512x512
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#059669"/>
+      <stop offset="100%" style="stop-color:#047857"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="512" height="512" rx="100" fill="url(#bgGrad)"/>
+  
+  <!-- Book icon -->
+  <g transform="translate(96, 96) scale(0.625)">
+    <!-- Open book base -->
+    <path d="M256 80 L64 120 L64 400 L256 360 L448 400 L448 120 Z" 
+          fill="white" opacity="0.95"/>
+    
+    <!-- Book spine -->
+    <path d="M256 80 L256 360" stroke="#047857" stroke-width="4"/>
+    
+    <!-- Left pages -->
+    <path d="M80 140 L240 112 L240 340 L80 368 Z" fill="#f0fdf4"/>
+    <line x1="100" y1="160" x2="220" y2="145" stroke="#059669" stroke-width="3" opacity="0.5"/>
+    <line x1="100" y1="200" x2="220" y2="185" stroke="#059669" stroke-width="3" opacity="0.5"/>
+    <line x1="100" y1="240" x2="220" y2="225" stroke="#059669" stroke-width="3" opacity="0.5"/>
+    <line x1="100" y1="280" x2="220" y2="265" stroke="#059669" stroke-width="3" opacity="0.5"/>
+    
+    <!-- Right pages -->
+    <path d="M432 140 L272 112 L272 340 L432 368 Z" fill="#f0fdf4"/>
+    <line x1="412" y1="160" x2="292" y2="145" stroke="#059669" stroke-width="3" opacity="0.5"/>
+    <line x1="412" y1="200" x2="292" y2="185" stroke="#059669" stroke-width="3" opacity="0.5"/>
+    <line x1="412" y1="240" x2="292" y2="225" stroke="#059669" stroke-width="3" opacity="0.5"/>
+    <line x1="412" y1="280" x2="292" y2="265" stroke="#059669" stroke-width="3" opacity="0.5"/>
+    
+    <!-- Graduation cap on top -->
+    <path d="M256 20 L356 60 L256 100 L156 60 Z" fill="#fbbf24"/>
+    <rect x="248" y="100" width="16" height="40" fill="#92400e"/>
+    <circle cx="256" cy="140" r="8" fill="#fbbf24"/>
+    <path d="M360 60 L360 90 Q360 110 340 120" stroke="#fbbf24" stroke-width="4" fill="none"/>
+    <circle cx="340" cy="120" r="6" fill="#fbbf24"/>
+  </g>
+  
+  <!-- AI sparkle -->
+  <g transform="translate(360, 360)">
+    <path d="M40 0 L48 32 L80 40 L48 48 L40 80 L32 48 L0 40 L32 32 Z" fill="#fbbf24"/>
+  </g>
+</svg>

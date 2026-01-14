@@ -1,0 +1,26 @@
+{
+  "student_id": "default_student_001",
+  "grade": 9,
+  "board": "national",
+  "language": "en",
+  "learningSpeed": "normal",
+  "topicMastery": {
+    "algebra": 0,
+    "geometry": 0,
+    "physics": 0,
+    "chemistry": 0
+  },
+  "mistakes": [],
+  "confidence": 50,
+  "created_at": "2026-01-10T00:00:00Z",
+  "last_updated": "2026-01-10T00:00:00Z",
+  "interactions": 0,
+  "strengths": [],
+  "weaknesses": [],
+  "learning_preferences": {
+    "style": "visual",
+    "pace": "normal",
+    "difficulty": "adaptive",
+    "hints_enabled": true
+  }
+}

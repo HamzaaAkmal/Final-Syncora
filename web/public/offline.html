@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Syncora - Offline Mode</title>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#059669">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #059669 0%, #047857 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    
+    .container {
+      background: white;
+      border-radius: 24px;
+      padding: 48px;
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    }
+    
+    .logo {
+      font-size: 64px;
+      margin-bottom: 24px;
+      animation: bounce 2s infinite;
+    }
+    
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-10px); }
+      60% { transform: translateY(-5px); }
+    }
+    
+    h1 {
+      color: #1f2937;
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
+    
+    .subtitle {
+      font-family: 'Noto Nastaliq Urdu', serif;
+      direction: rtl;
+      color: #059669;
+      font-size: 24px;
+      margin-bottom: 24px;
+    }
+    
+    .message {
+      color: #6b7280;
+      font-size: 16px;
+      line-height: 1.8;
+      margin-bottom: 32px;
+    }
+    
+    .offline-features {
+      background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 32px;
+      text-align: left;
+    }
+    
+    .offline-features h3 {
+      color: #047857;
+      margin-bottom: 16px;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+    
+    .feature {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px;
+      background: white;
+      border-radius: 10px;
+      font-size: 14px;
+      color: #374151;
+    }
+    
+    .feature-icon {
+      font-size: 20px;
+    }
+    
+    .tips {
+      background: #fef3c7;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 32px;
+      text-align: left;
+    }
+    
+    .tips h4 {
+      color: #92400e;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+    
+    .tips p {
+      color: #78350f;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    
+    .actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 16px 32px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s;
+      border: none;
+      text-decoration: none;
+    }
+    
+    .btn-primary {
+      background: #059669;
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background: #047857;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px -5px rgba(5, 150, 105, 0.4);
+    }
+    
+    .btn-secondary {
+      background: #f3f4f6;
+      color: #374151;
+    }
+    
+    .btn-secondary:hover {
+      background: #e5e7eb;
+    }
+    
+    .status-bar {
+      margin-top: 24px;
+      padding: 12px 20px;
+      border-radius: 30px;
+      font-size: 14px;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .status-offline {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+    
+    .status-online {
+      background: #d1fae5;
+      color: #065f46;
+    }
+    
+    .pulse {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    
+    .pulse-red {
+      background: #ef4444;
+    }
+    
+    .pulse-green {
+      background: #10b981;
+    }
+    
+    @keyframes pulse {
+      0% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.1); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    
+    .cached-content {
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid #e5e7eb;
+    }
+    
+    .cached-content h4 {
+      color: #374151;
+      margin-bottom: 16px;
+      font-size: 16px;
+    }
+    
+    .cached-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      background: #f9fafb;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+    
+    .cached-item-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .cached-item-size {
+      color: #9ca3af;
+      font-size: 12px;
+    }
+    
+    @media (max-width: 480px) {
+      .container {
+        padding: 32px 20px;
+      }
+      
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .actions {
+        flex-direction: column;
+      }
+      
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">📚</div>
+    <h1>Syncora</h1>
+    <p class="subtitle">آپ کا ذاتی AI استاد</p>
+    
+    <p class="message">
+      You're currently offline, but your learning journey doesn't have to stop! 
+      Syncora has prepared offline content so you can continue studying even without internet.
+    </p>
+    
+    <div class="offline-features">
+      <h3>📥 Available Offline</h3>
+      <div class="feature-grid">
+        <div class="feature">
+          <span class="feature-icon">📖</span>
+          <span>Cached Lessons</span>
+        </div>
+        <div class="feature">
+          <span class="feature-icon">📝</span>
+          <span>Practice Problems</span>
+        </div>
+        <div class="feature">
+          <span class="feature-icon">📊</span>
+          <span>Progress Data</span>
+        </div>
+        <div class="feature">
+          <span class="feature-icon">📦</span>
+          <span>Downloaded Packs</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="tips">
+      <h4>💡 Tip: Download Offline Packs</h4>
+      <p>
+        When you're online, download 1-Day Learning Packs from your dashboard. 
+        These packs contain complete lessons for offline study!
+      </p>
+    </div>
+    
+    <div class="actions">
+      <button class="btn btn-primary" onclick="window.location.reload()">
+        🔄 Try Again
+      </button>
+      <button class="btn btn-secondary" onclick="viewCachedContent()">
+        📂 View Cached Content
+      </button>
+    </div>
+    
+    <div id="status" class="status-bar status-offline">
+      <div class="pulse pulse-red"></div>
+      <span>Currently Offline</span>
+    </div>
+    
+    <div id="cached-content" class="cached-content" style="display: none;">
+      <h4>📂 Your Cached Content</h4>
+      <div id="cached-list">
+        <p style="color: #9ca3af; font-size: 14px;">Loading cached content...</p>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // Update online status
+    function updateStatus() {
+      const statusEl = document.getElementById('status');
+      if (navigator.onLine) {
+        statusEl.className = 'status-bar status-online';
+        statusEl.innerHTML = '<div class="pulse pulse-green"></div><span>Back Online - Refreshing...</span>';
+        setTimeout(() => window.location.href = '/', 1500);
+      } else {
+        statusEl.className = 'status-bar status-offline';
+        statusEl.innerHTML = '<div class="pulse pulse-red"></div><span>Currently Offline</span>';
+      }
+    }
+    
+    // View cached content
+    async function viewCachedContent() {
+      const container = document.getElementById('cached-content');
+      const list = document.getElementById('cached-list');
+      
+      container.style.display = 'block';
+      
+      if ('caches' in window) {
+        try {
+          const cacheNames = await caches.keys();
+          let items = [];
+          
+          for (const name of cacheNames) {
+            const cache = await caches.open(name);
+            const keys = await cache.keys();
+            
+            for (const request of keys) {
+              items.push({
+                url: request.url,
+                cache: name
+              });
+            }
+          }
+          
+          if (items.length > 0) {
+            list.innerHTML = items.slice(0, 10).map(item => {
+              const url = new URL(item.url);
+              return `
+                <div class="cached-item">
+                  <div class="cached-item-info">
+                    <span>📄</span>
+                    <span>${url.pathname || '/'}</span>
+                  </div>
+                  <span class="cached-item-size">${item.cache}</span>
+                </div>
+              `;
+            }).join('');
+            
+            if (items.length > 10) {
+              list.innerHTML += `
+                <p style="color: #9ca3af; font-size: 13px; margin-top: 8px;">
+                  +${items.length - 10} more cached items
+                </p>
+              `;
+            }
+          } else {
+            list.innerHTML = '<p style="color: #9ca3af; font-size: 14px;">No cached content available yet.</p>';
+          }
+        } catch (error) {
+          list.innerHTML = '<p style="color: #ef4444; font-size: 14px;">Unable to read cache.</p>';
+        }
+      } else {
+        list.innerHTML = '<p style="color: #9ca3af; font-size: 14px;">Cache API not supported in this browser.</p>';
+      }
+    }
+    
+    // Event listeners
+    window.addEventListener('online', updateStatus);
+    window.addEventListener('offline', updateStatus);
+    updateStatus();
+  </script>
+</body>
+</html>

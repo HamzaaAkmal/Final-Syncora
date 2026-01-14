@@ -1,0 +1,8 @@
+__pycache__
+*.pyc
+.env
+.vscode/
+node_modules/
+web/node_modules/
+data/*.sqlite3
+.git

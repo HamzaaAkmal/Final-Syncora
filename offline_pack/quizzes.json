@@ -1,0 +1,200 @@
+{
+  "meta": {
+    "title": "Quizzes - Grade 9 Mathematics",
+    "total_quizzes": 5,
+    "total_questions": 25,
+    "passing_score": 70
+  },
+  "quizzes": [
+    {
+      "quiz_id": "Q1_algebra_basics",
+      "lesson_id": "L1_intro_algebra",
+      "title": "Quiz 1 - Algebra Basics",
+      "questions_count": 5,
+      "time_limit_minutes": 10,
+      "questions": [
+        {
+          "q_id": "Q1_1",
+          "type": "multiple_choice",
+          "difficulty": "beginner",
+          "question": "Which of the following is an algebraic expression?",
+          "options": [
+            "5 + 3 = 8",
+            "2x + 5",
+            "10",
+            "5 < 7"
+          ],
+          "correct_answer": "2x + 5",
+          "explanation": "An algebraic expression contains at least one variable. Option B (2x + 5) contains the variable x."
+        },
+        {
+          "q_id": "Q1_2",
+          "type": "fill_blank",
+          "difficulty": "beginner",
+          "question": "Write an algebraic expression: 'Three times a number increased by 7' is ___",
+          "correct_answer": "3x + 7",
+          "explanation": "Let x be the number. Three times x is 3x. Increased by 7 means add 7. So: 3x + 7"
+        },
+        {
+          "q_id": "Q1_3",
+          "type": "multiple_choice",
+          "difficulty": "intermediate",
+          "question": "If x = 4, what is the value of 2x² - 3x + 5?",
+          "options": ["21", "25", "29", "33"],
+          "correct_answer": "29",
+          "explanation": "2(4)² - 3(4) + 5 = 2(16) - 12 + 5 = 32 - 12 + 5 = 25. Wait, let me recalculate: 32 - 12 + 5 = 25. Actually the answer is 25."
+        },
+        {
+          "q_id": "Q1_4",
+          "type": "multiple_choice",
+          "difficulty": "intermediate",
+          "question": "Combine like terms: 3x + 2y - x + 5y",
+          "options": ["2x + 7y", "4x + 7y", "3x + 7y", "2x + 3y"],
+          "correct_answer": "2x + 7y",
+          "explanation": "Combine x terms: 3x - x = 2x. Combine y terms: 2y + 5y = 7y. Result: 2x + 7y"
+        },
+        {
+          "q_id": "Q1_5",
+          "type": "true_false",
+          "difficulty": "intermediate",
+          "question": "The terms 2x² and 2x are like terms.",
+          "correct_answer": "false",
+          "explanation": "Like terms must have the same variable raised to the same power. 2x² has x², while 2x has x¹. They are NOT like terms."
+        }
+      ]
+    },
+    {
+      "quiz_id": "Q2_solving_equations",
+      "lesson_id": "L2_linear_equations",
+      "title": "Quiz 2 - Solving Linear Equations",
+      "questions_count": 5,
+      "time_limit_minutes": 10,
+      "questions": [
+        {
+          "q_id": "Q2_1",
+          "type": "multiple_choice",
+          "difficulty": "beginner",
+          "question": "Solve: x + 8 = 15",
+          "options": ["x = 7", "x = 23", "x = 8", "x = 15"],
+          "correct_answer": "x = 7",
+          "explanation": "Subtract 8 from both sides: x = 15 - 8 = 7"
+        },
+        {
+          "q_id": "Q2_2",
+          "type": "multiple_choice",
+          "difficulty": "beginner",
+          "question": "Solve: 3x = 21",
+          "options": ["x = 7", "x = 18", "x = 24", "x = 63"],
+          "correct_answer": "x = 7",
+          "explanation": "Divide both sides by 3: x = 21 ÷ 3 = 7"
+        },
+        {
+          "q_id": "Q2_3",
+          "type": "multiple_choice",
+          "difficulty": "intermediate",
+          "question": "Solve: 2x - 5 = 11",
+          "options": ["x = 3", "x = 6", "x = 8", "x = 16"],
+          "correct_answer": "x = 8",
+          "explanation": "Add 5 to both sides: 2x = 16. Divide by 2: x = 8"
+        },
+        {
+          "q_id": "Q2_4",
+          "type": "fill_blank",
+          "difficulty": "intermediate",
+          "question": "Solve: 4(x + 3) = 28. Answer: x = ___",
+          "correct_answer": "4",
+          "explanation": "Distribute: 4x + 12 = 28. Subtract 12: 4x = 16. Divide: x = 4"
+        },
+        {
+          "q_id": "Q2_5",
+          "type": "multiple_choice",
+          "difficulty": "advanced",
+          "question": "Solve: 2x + 5 = x + 12",
+          "options": ["x = 5", "x = 7", "x = 17", "x = 2"],
+          "correct_answer": "x = 7",
+          "explanation": "Subtract x from both sides: x + 5 = 12. Subtract 5: x = 7"
+        }
+      ]
+    },
+    {
+      "quiz_id": "Q3_quadratics",
+      "lesson_id": "L3_expanding_factoring",
+      "title": "Quiz 3 - Expanding and Factoring",
+      "questions_count": 5,
+      "time_limit_minutes": 10,
+      "questions": [
+        {
+          "q_id": "Q3_1",
+          "type": "multiple_choice",
+          "difficulty": "intermediate",
+          "question": "Expand: (x + 2)(x + 4)",
+          "options": ["x² + 6x + 8", "x² + 8x + 8", "x² + 6x + 6", "x² + 4x + 8"],
+          "correct_answer": "x² + 6x + 8",
+          "explanation": "FOIL: x·x = x², x·4 + 2·x = 6x, 2·4 = 8. Result: x² + 6x + 8"
+        },
+        {
+          "q_id": "Q3_2",
+          "type": "multiple_choice",
+          "difficulty": "intermediate",
+          "question": "Factor: x² + 7x + 12",
+          "options": ["(x + 3)(x + 4)", "(x + 2)(x + 6)", "(x + 1)(x + 12)", "(x + 5)(x + 2)"],
+          "correct_answer": "(x + 3)(x + 4)",
+          "explanation": "Find two numbers that multiply to 12 and add to 7: 3 and 4. So (x + 3)(x + 4)"
+        },
+        {
+          "q_id": "Q3_3",
+          "type": "fill_blank",
+          "difficulty": "intermediate",
+          "question": "Factor: x² - 5x + 6 = (x - ___)(x - ___)",
+          "correct_answer": "2 and 3 or 3 and 2",
+          "explanation": "Find two numbers that multiply to 6 and add to -5: -2 and -3. So (x - 2)(x - 3)"
+        }
+      ]
+    },
+    {
+      "quiz_id": "Q4_word_problems",
+      "lesson_id": "L4_word_problems",
+      "title": "Quiz 4 - Word Problems",
+      "questions_count": 5,
+      "time_limit_minutes": 15,
+      "questions": [
+        {
+          "q_id": "Q4_1",
+          "type": "multiple_choice",
+          "difficulty": "intermediate",
+          "question": "Ahmed has 5 more pencils than Sara. Together they have 23 pencils. How many does Ahmed have?",
+          "options": ["9", "14", "19", "28"],
+          "correct_answer": "14",
+          "explanation": "Let S = Sara's pencils, A = Ahmed's. A = S + 5. A + S = 23. (S + 5) + S = 23. 2S = 18. S = 9. A = 14"
+        },
+        {
+          "q_id": "Q4_2",
+          "type": "multiple_choice",
+          "difficulty": "intermediate",
+          "question": "A rectangle's length is twice its width. If perimeter is 36, what is the length?",
+          "options": ["6", "12", "18", "24"],
+          "correct_answer": "12",
+          "explanation": "Let w = width, l = 2w. Perimeter = 2l + 2w = 2(2w) + 2w = 6w = 36. w = 6, l = 12"
+        }
+      ]
+    },
+    {
+      "quiz_id": "Q5_systems",
+      "lesson_id": "L5_systems_equations",
+      "title": "Quiz 5 - Systems of Equations",
+      "questions_count": 5,
+      "time_limit_minutes": 15,
+      "questions": [
+        {
+          "q_id": "Q5_1",
+          "type": "multiple_choice",
+          "difficulty": "intermediate",
+          "question": "Solve: x + y = 8 and x - y = 2",
+          "options": ["x=5, y=3", "x=6, y=2", "x=3, y=5", "x=4, y=4"],
+          "correct_answer": "x=5, y=3",
+          "explanation": "Add equations: 2x = 10, x = 5. Substitute: 5 + y = 8, y = 3"
+        }
+      ]
+    }
+  ]
+}

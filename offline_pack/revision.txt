@@ -1,0 +1,218 @@
+═══════════════════════════════════════════════════════════════════════════════
+GRADE 9 MATHEMATICS - 1-DAY REVISION PACK
+═══════════════════════════════════════════════════════════════════════════════
+
+═══════════════════════════════════════════════════════════════════════════════
+LESSON 1: INTRODUCTION TO ALGEBRA (90 minutes)
+═══════════════════════════════════════════════════════════════════════════════
+
+KEY CONCEPTS:
+• Algebra uses variables (letters) to represent unknown numbers
+• Variables can be combined with constants to form expressions
+• We use algebraic expressions to solve real-world problems
+
+IMPORTANT FORMULAS & RULES:
+• An expression is a combination of numbers, variables, and operations
+• Like terms have the same variable with the same power
+• Order of operations: PEMDAS/BODMAS (Parentheses, Exponents, Multiply/Divide, Add/Subtract)
+
+QUICK REVISION:
+1. What is a variable? A letter representing an unknown number
+2. What is a constant? A fixed number value
+3. When are terms "like terms"? When they have the exact same variables with same powers
+
+COMMON MISTAKES TO AVOID:
+✗ Forgetting that variables represent numbers - they follow all number rules
+✗ Confusing like and unlike terms
+✗ Not following order of operations
+
+
+═══════════════════════════════════════════════════════════════════════════════
+LESSON 2: SOLVING LINEAR EQUATIONS (100 minutes)
+═══════════════════════════════════════════════════════════════════════════════
+
+KEY CONCEPT:
+An equation is solved by isolating the variable using inverse operations.
+
+THE GOLDEN RULE:
+Whatever you do to one side of the equation, you MUST do to the other side.
+
+INVERSE OPERATIONS:
+• Addition ↔ Subtraction
+• Multiplication ↔ Division
+• Exponents ↔ Roots
+
+STEP-BY-STEP STRATEGY:
+1. Distribute if needed
+2. Combine like terms
+3. Get variable terms on one side
+4. Get constants on the other side
+5. Isolate the variable
+6. Check your answer by substituting back
+
+QUICK EXAMPLES:
+• x + 5 = 12  →  x = 12 - 5 = 7
+• 2x = 10  →  x = 10 ÷ 2 = 5
+• 2x + 3 = 11  →  2x = 8  →  x = 4
+
+VERIFICATION:
+Always substitute your answer back into the original equation to check!
+
+
+═══════════════════════════════════════════════════════════════════════════════
+LESSON 3: EXPANDING AND FACTORING QUADRATICS (110 minutes)
+═══════════════════════════════════════════════════════════════════════════════
+
+EXPANDING: Multiply out brackets
+Use FOIL (First, Outer, Inner, Last) method:
+(a + b)(c + d) = ac + ad + bc + bd
+
+Example: (x + 2)(x + 3)
+  First: x · x = x²
+  Outer: x · 3 = 3x
+  Inner: 2 · x = 2x
+  Last: 2 · 3 = 6
+  Result: x² + 5x + 6
+
+FACTORING: Reverse of expanding
+To factor x² + bx + c, find two numbers that:
+  1) Multiply to give c
+  2) Add to give b
+
+Example: x² + 5x + 6
+  Find two numbers: 2 and 3 (2×3 = 6, 2+3 = 5)
+  Result: (x + 2)(x + 3)
+
+PRACTICE:
+Expand: (x + 1)(x + 4) = x² + 5x + 4
+Factor: x² + 5x + 4 = (x + 1)(x + 4)
+
+
+═══════════════════════════════════════════════════════════════════════════════
+LESSON 4: SOLVING WORD PROBLEMS (90 minutes)
+═══════════════════════════════════════════════════════════════════════════════
+
+5-STEP PROBLEM SOLVING APPROACH:
+
+STEP 1: READ AND UNDERSTAND
+• Read the problem carefully
+• Identify what you're looking for
+• Identify what you know
+
+STEP 2: DEFINE VARIABLES
+• Let x = what you're looking for
+• Or define other variables needed
+
+STEP 3: SET UP THE EQUATION
+• Translate words into mathematical symbols
+• Use the information given to form an equation
+
+STEP 4: SOLVE THE EQUATION
+• Use algebra techniques learned earlier
+• Work step by step
+
+STEP 5: CHECK AND INTERPRET
+• Substitute answer back
+• Make sure answer makes sense in context
+• Include units in final answer
+
+KEYWORDS TO WATCH FOR:
+• "Is" or "equals" = use =
+• "Sum" = add
+• "Difference" = subtract
+• "Product" = multiply
+• "Quotient" = divide
+• "More than" or "increased by" = add
+• "Less than" or "decreased by" = subtract
+
+
+═══════════════════════════════════════════════════════════════════════════════
+LESSON 5: SYSTEMS OF LINEAR EQUATIONS (90 minutes)
+═══════════════════════════════════════════════════════════════════════════════
+
+WHAT IS A SYSTEM?
+Two or more equations that must be true at the same time.
+
+METHOD 1: SUBSTITUTION
+1. Solve one equation for one variable
+2. Substitute this expression into the other equation
+3. Solve for the remaining variable
+4. Substitute back to find the other variable
+
+METHOD 2: ELIMINATION
+1. Multiply one or both equations to make coefficients equal
+2. Add or subtract equations to eliminate one variable
+3. Solve for the remaining variable
+4. Substitute back to find the other variable
+
+WHICH METHOD TO USE?
+• Substitution: When one variable is already isolated or easy to isolate
+• Elimination: When coefficients are already similar or easy to make similar
+
+VERIFICATION:
+Always check your solution by substituting (x, y) into BOTH original equations.
+
+
+═══════════════════════════════════════════════════════════════════════════════
+SUMMARY OF KEY FORMULAS & TECHNIQUES
+═══════════════════════════════════════════════════════════════════════════════
+
+ALGEBRAIC OPERATIONS:
+• (a + b)² = a² + 2ab + b²
+• (a - b)² = a² - 2ab + b²
+• (a + b)(a - b) = a² - b²
+• Quadratic formula: x = (-b ± √(b² - 4ac)) / 2a
+
+SOLVING TECHNIQUES:
+• Always perform same operation on both sides
+• Work to isolate the variable
+• Check your answer
+
+WORD PROBLEM STEPS:
+1. Read and understand
+2. Define variables
+3. Set up equation
+4. Solve
+5. Check and interpret
+
+
+═══════════════════════════════════════════════════════════════════════════════
+PRACTICE PROBLEMS - FINAL CHECK
+═══════════════════════════════════════════════════════════════════════════════
+
+1. Solve: 3x + 7 = 22
+   Answer: x = 5
+
+2. Factor: x² + 8x + 15
+   Answer: (x + 3)(x + 5)
+
+3. Expand: (x - 4)(x + 2)
+   Answer: x² - 2x - 8
+
+4. Word Problem: A number is 3 times another number. Their sum is 24. Find the numbers.
+   Answer: Numbers are 6 and 18
+
+5. System: x + y = 10 and x - y = 4
+   Answer: x = 7, y = 3
+
+
+═══════════════════════════════════════════════════════════════════════════════
+TIPS FOR SUCCESS
+═══════════════════════════════════════════════════════════════════════════════
+
+✓ Show all your work - makes it easier to check
+✓ Be careful with signs - negative signs cause most errors
+✓ Double-check arithmetic
+✓ Always verify your answer makes sense
+✓ Practice with different problem types
+✓ Learn from your mistakes
+
+═══════════════════════════════════════════════════════════════════════════════
+
+Generated: 2026-01-10
+Subject: Mathematics
+Grade: 9
+Duration: 1 Day (480 minutes)
+Total Topics: 5 Lessons + 5 Quizzes
+
+═══════════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,50 @@
+{
+  "packs": [
+    {
+      "pack_id": "pack_9_urdu_20260110_190642",
+      "grade": 9,
+      "subject": "urdu",
+      "language": "en",
+      "topics": [
+        "Urdu Grammar - Rules (قواعد)",
+        "اردو ادب کی پہچان اور اہمیت",
+        "Nazm and Nasr (Poetry and Prose)",
+        "Essay Writing",
+        "Pronunciation (Tallafuz)"
+      ],
+      "created_at": "2026-01-10T19:07:26.384005",
+      "file_path": "C:\\Users\\Hamza\\Desktop\\EDUTech\\DeepTutor\\data\\offline_packs\\pack_9_urdu_20260110_190642.zip",
+      "size_bytes": 13531,
+      "download_url": "/api/v1/offline/download/pack_9_urdu_20260110_190642"
+    },
+    {
+      "pack_id": "pack_6_all_20260110_121753",
+      "grade": 6,
+      "subject": "all",
+      "language": "en",
+      "topics": [
+        "Quadratic Equations",
+        "Motion and Force",
+        "Grammar Basics",
+        "Urdu Grammar (قواعد)"
+      ],
+      "created_at": "2026-01-10T12:18:36.150013",
+      "file_path": "C:\\Users\\nnew0\\OneDrive\\Desktop\\Syncora\\Syncora\\data\\offline_packs\\pack_6_all_20260110_121753.zip",
+      "size_bytes": 10505,
+      "download_url": "/api/v1/offline/download/pack_6_all_20260110_121753"
+    },
+    {
+      "pack_id": "pack_11_english_20260114_224835",
+      "grade": 11,
+      "subject": "english",
+      "language": "en",
+      "topics": [
+        "Understanding MCP Servers"
+      ],
+      "created_at": "2026-01-14T22:48:49.070424",
+      "file_path": "C:\\Users\\Hamza\\Desktop\\Syncora Final\\Syncora\\data\\offline_packs\\pack_11_english_20260114_224835.zip",
+      "size_bytes": 6063,
+      "download_url": "/api/v1/offline/download/pack_11_english_20260114_224835"
+    }
+  ]
+}

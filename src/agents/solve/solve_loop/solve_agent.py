@@ -75,17 +75,30 @@ class SolveAgent(BaseAgent):
             response_format={"type": "json_object"},  # Force JSON
         )
 
-        tool_plan = self._parse_tool_plan(response)
-        if not tool_plan:
-            # Try to be compatible with old logic, or raise error
-            # For robustness, if JSON parsing fails, raise more specific error
+        tool_plan, has_valid_json = self._parse_tool_plan(response)
+        
+        # If we have valid JSON with empty tool_calls, that's OK - it means no more tools needed
+        if not has_valid_json:
+            # JSON parsing completely failed
             self.logger.warning(
-                f"SolveAgent JSON parsing failed or empty, Raw: {response[:200]}..."
+                f"SolveAgent JSON parsing failed, Raw: {response[:200]}..."
             )
-            # If empty list, also treat as exception, because SolveAgent should output at least none or finish
             raise ValueError(
-                "SolveAgent did not parse any valid tool_calls structure from LLM output"
+                "SolveAgent did not parse any valid JSON structure from LLM output"
             )
+        
+        # Empty tool_calls is valid - means the step can proceed to response generation
+        if not tool_plan:
+            self.logger.info("SolveAgent returned empty tool_calls, proceeding to response phase")
+            solve_memory.save()
+            citation_memory.save()
+            return {
+                "step_id": current_step.step_id,
+                "requested_calls": [],
+                "finish_requested": True,  # No more tools needed, ready for response
+                "raw_llm_response": response,
+                "status": "ready_for_response",
+            }
 
         finish_requested = any(item["type"] == "finish" for item in tool_plan)
         newly_created: list[dict[str, Any]] = []
@@ -254,18 +267,25 @@ class SolveAgent(BaseAgent):
             )
         return "\n\n".join(lines)
 
-    def _parse_tool_plan(self, response: str) -> list[dict[str, str]]:
+    def _parse_tool_plan(self, response: str) -> tuple[list[dict[str, str]], bool]:
         """
         Parse JSON plan returned by LLM
+        
+        Returns:
+            Tuple of (tool_calls list, has_valid_json bool)
         """
         parsed_data = extract_json_from_text(response)
 
         if not parsed_data or not isinstance(parsed_data, dict):
-            return []
+            return [], False
 
         tool_calls = parsed_data.get("tool_calls", [])
         if not isinstance(tool_calls, list):
-            return []
+            return [], False
+
+        # Empty list is valid - means no tools needed
+        if len(tool_calls) == 0:
+            return [], True
 
         actions: list[dict[str, str]] = []
         for item in tool_calls:
@@ -285,7 +305,7 @@ class SolveAgent(BaseAgent):
 
             actions.append({"type": tool_type, "query": query})
 
-        return actions
+        return actions, True
 
     # ------------------------------------------------------------------ #
     # Query preprocessing & helper

@@ -24,14 +24,14 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Synchore - AI Learning Companion",
+  title: "Synchora - AI Learning Companion",
   description: "Personalized learning through Agentic AI for Pakistani students. PCTB curriculum aligned with Urdu support.",
   manifest: "/manifest.json",
-  applicationName: "Synchore",
+  applicationName: "Synchora",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "Synchore",
+    title: "Synchora",
   },
   formatDetection: {
     telephone: false,
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     ],
   },
   keywords: ["education", "AI tutor", "Pakistan", "PCTB", "learning", "Urdu", "offline learning"],
-  authors: [{ name: "Synchore Team" }],
+  authors: [{ name: "Synchora Team" }],
   category: "education",
 };
 
@@ -64,7 +64,7 @@ export default function RootLayout({
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="Synchore" />
+        <meta name="apple-mobile-web-app-title" content="Synchora" />
       </head>
       <body className={font.className} style={{ backgroundColor: '#050505', minHeight: '100vh' }}>
         <GlobalProvider>

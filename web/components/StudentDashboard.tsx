@@ -912,7 +912,7 @@ function WelcomeDialog({
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text'
           }}>
-            {isUrdu ? "Synchore میں خوش آمدید! 🎉" : "Welcome to Synchore! 🎉"}
+            {isUrdu ? "Synchora میں خوش آمدید! 🎉" : "Welcome to Synchora! 🎉"}
           </h2>
           <p className="text-gray-600 dark:text-gray-400 mb-6">
             {isUrdu 

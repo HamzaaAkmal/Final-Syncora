@@ -389,13 +389,27 @@ class InvestigateAgent(BaseAgent):
         self, query: str, kb_name: str, output_dir: str | None
     ) -> dict[str, Any]:
         """Call RAG Naive"""
-        return await rag_search(query=query, kb_name=kb_name, mode="naive")
+        if not kb_name:
+            self.logger.info("No knowledge base specified, skipping RAG naive retrieval")
+            return {"answer": "No knowledge base specified. Please select a knowledge base to enable retrieval.", "skipped": True}
+        try:
+            return await rag_search(query=query, kb_name=kb_name, mode="naive")
+        except Exception as e:
+            self.logger.warning(f"RAG naive search failed: {e}")
+            return {"answer": f"RAG search failed: {str(e)[:200]}", "error": str(e)}
 
     async def _call_rag_hybrid(
         self, query: str, kb_name: str, output_dir: str | None
     ) -> dict[str, Any]:
         """Call RAG Hybrid"""
-        return await rag_search(query=query, kb_name=kb_name, mode="hybrid")
+        if not kb_name:
+            self.logger.info("No knowledge base specified, skipping RAG hybrid retrieval")
+            return {"answer": "No knowledge base specified. Please select a knowledge base to enable retrieval.", "skipped": True}
+        try:
+            return await rag_search(query=query, kb_name=kb_name, mode="hybrid")
+        except Exception as e:
+            self.logger.warning(f"RAG hybrid search failed: {e}")
+            return {"answer": f"RAG search failed: {str(e)[:200]}", "error": str(e)}
 
     async def _call_web_search(self, query: str, output_dir: str | None) -> dict[str, Any]:
         """Call Web Search"""

@@ -228,18 +228,34 @@ Rules:
         query = record.query
 
         if tool_type == "rag_naive":
-            result = await rag_search(query=query, kb_name=kb_name, mode="naive")
-            answer = result.get("answer", "")
-            source, auto_sources = self._infer_sources(answer)
-            metadata = {"source": source, "auto_sources": auto_sources, "mode": "naive"}
-            return answer, metadata
+            # Skip RAG if no KB specified
+            if not kb_name:
+                self.logger.info("No knowledge base specified, skipping RAG retrieval")
+                return "No knowledge base specified. Please select a knowledge base to enable retrieval.", {"source": "none", "auto_sources": [], "mode": "naive", "skipped": True}
+            try:
+                result = await rag_search(query=query, kb_name=kb_name, mode="naive")
+                answer = result.get("answer", "")
+                source, auto_sources = self._infer_sources(answer)
+                metadata = {"source": source, "auto_sources": auto_sources, "mode": "naive"}
+                return answer, metadata
+            except Exception as e:
+                self.logger.warning(f"RAG naive search failed: {e}")
+                return f"RAG search failed: {str(e)[:200]}", {"source": "error", "auto_sources": [], "mode": "naive", "error": str(e)}
 
         if tool_type == "rag_hybrid":
-            result = await rag_search(query=query, kb_name=kb_name, mode="hybrid")
-            answer = result.get("answer", "")
-            source, auto_sources = self._infer_sources(answer)
-            metadata = {"source": source, "auto_sources": auto_sources, "mode": "hybrid"}
-            return answer, metadata
+            # Skip RAG if no KB specified
+            if not kb_name:
+                self.logger.info("No knowledge base specified, skipping RAG retrieval")
+                return "No knowledge base specified. Please select a knowledge base to enable retrieval.", {"source": "none", "auto_sources": [], "mode": "hybrid", "skipped": True}
+            try:
+                result = await rag_search(query=query, kb_name=kb_name, mode="hybrid")
+                answer = result.get("answer", "")
+                source, auto_sources = self._infer_sources(answer)
+                metadata = {"source": source, "auto_sources": auto_sources, "mode": "hybrid"}
+                return answer, metadata
+            except Exception as e:
+                self.logger.warning(f"RAG hybrid search failed: {e}")
+                return f"RAG search failed: {str(e)[:200]}", {"source": "error", "auto_sources": [], "mode": "hybrid", "error": str(e)}
 
         if tool_type == "web_search":
             result = web_search(query=query, output_dir=output_dir, verbose=verbose)

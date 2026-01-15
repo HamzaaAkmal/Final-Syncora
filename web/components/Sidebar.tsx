@@ -86,7 +86,7 @@ export default function Sidebar() {
           <div className="w-10 h-10 flex items-center justify-center overflow-hidden shadow-emerald-glow" style={{ borderRadius: '20px', background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)' }}>
             <Image
               src="/logo.png"
-              alt="Synchore Logo"
+              alt="Synchora Logo"
               width={36}
               height={36}
               className="object-contain"
@@ -193,7 +193,7 @@ export default function Sidebar() {
               <div className="w-10 h-10 flex items-center justify-center overflow-hidden shadow-emerald-glow" style={{ borderRadius: '20px', background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)' }}>
                 <Image
                   src="/logo.png"
-                  alt="Synchore Logo"
+                  alt="Synchora Logo"
                   width={36}
                   height={36}
                   className="object-contain"
@@ -248,7 +248,7 @@ export default function Sidebar() {
             borderRadius: '12px',
             border: '1px solid rgba(16, 185, 129, 0.2)'
           }}>
-            ✨ Synchore Team
+            ✨ Synchora Team
           </div>
         </div>
       </div>

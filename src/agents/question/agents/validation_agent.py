@@ -107,26 +107,50 @@ class QuestionValidationAgent(BaseAgent):
             return Observation(
                 success=False, result=None, message="Retrieval query cannot be empty"
             )
+        
+        # Skip retrieval if no knowledge base is specified
+        if not self.kb_name or self.kb_name.strip() == "":
+            self.retrieved_knowledge.append(
+                {
+                    "query": query,
+                    "answer": "No knowledge base specified. Validation will use LLM knowledge only.",
+                }
+            )
+            return Observation(
+                success=True,
+                result={"answer": ""},
+                message="No knowledge base specified, proceeding with LLM-based validation"
+            )
 
         # Get RAG mode from config
         question_cfg = self._config.get("question", {})
         rag_mode = question_cfg.get("rag_mode", "hybrid")
 
-        result = await rag_search(
-            query=query,
-            kb_name=self.kb_name,
-            mode=rag_mode,
-            only_need_context=True,
-        )
+        try:
+            result = await rag_search(
+                query=query,
+                kb_name=self.kb_name,
+                mode=rag_mode,
+                only_need_context=True,
+            )
 
-        answer = result.get("answer", "")
+            answer = result.get("answer", "")
 
-        self.retrieved_knowledge.append(
-            {
-                "query": query,
-                "answer": answer,
-            }
-        )
+            self.retrieved_knowledge.append(
+                {
+                    "query": query,
+                    "answer": answer,
+                }
+            )
+        except Exception as e:
+            _logger.warning(f"RAG retrieval failed for validation: {e}")
+            answer = ""
+            self.retrieved_knowledge.append(
+                {
+                    "query": query,
+                    "answer": f"RAG retrieval failed: {str(e)[:100]}. Using LLM knowledge only.",
+                }
+            )
 
         answer_len = len(answer) if answer else 0
         summary = f"Retrieved context with {answer_len} characters for query: {query[:50]}..."

@@ -203,6 +203,11 @@ Output the retrieval query directly, no additional content.
 
     async def _retrieve_knowledge(self, question: dict[str, Any]) -> list[dict[str, Any]]:
         """Retrieve knowledge needed for validation."""
+        # Skip retrieval if no knowledge base is specified
+        if not self.kb_name or self.kb_name.strip() == "":
+            logger.info("No knowledge base specified, skipping retrieval for validation")
+            return []
+        
         # Use LLM to generate retrieval query
         query = await self._generate_retrieval_query(question)
 

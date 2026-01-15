@@ -1193,74 +1193,6 @@ export default function SettingsPage() {
                     : t("Test Embedding")}
                 </button>
               </div>
-
-              {/* TTS Status */}
-              <div
-                className={`p-3 rounded-lg border transition-all ${
-                  serviceTestResults.tts?.status === "success" ||
-                  testResults?.tts?.status === "configured"
-                    ? "bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800"
-                    : serviceTestResults.tts?.status === "error" ||
-                        testResults?.tts?.status === "error"
-                      ? "bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800"
-                      : "bg-slate-50 dark:bg-slate-700/50 border-slate-200 dark:border-slate-600"
-                }`}
-              >
-                <div className="flex items-center justify-between mb-2">
-                  <div className="flex items-center gap-2">
-                    <Volume2 className="w-4 h-4 text-rose-500" />
-                    <span className="text-xs font-semibold text-slate-700 dark:text-slate-200">
-                      TTS
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    {serviceTestResults.tts?.response_time_ms && (
-                      <span className="text-[9px] text-slate-400">
-                        {serviceTestResults.tts.response_time_ms}ms
-                      </span>
-                    )}
-                    {(serviceTestResults.tts || testResults?.tts) &&
-                      getStatusIcon(
-                        serviceTestResults.tts?.status === "success"
-                          ? "configured"
-                          : serviceTestResults.tts?.status ||
-                              testResults?.tts?.status ||
-                              "unknown",
-                      )}
-                  </div>
-                </div>
-                <p className="text-[10px] text-slate-600 dark:text-slate-400 font-mono truncate mb-1">
-                  {serviceTestResults.tts?.model ||
-                    testResults?.tts?.model ||
-                    editedEnvVars["TTS_MODEL"] ||
-                    t("Not configured")}
-                </p>
-                <p className="text-[10px] text-slate-500 dark:text-slate-500 truncate mb-2">
-                  {editedEnvVars["TTS_URL"] || t("No endpoint")}
-                </p>
-                {serviceTestResults.tts?.message && (
-                  <p className="text-[9px] text-green-600 dark:text-green-400 truncate mb-2">
-                    {serviceTestResults.tts.message}
-                  </p>
-                )}
-                {serviceTestResults.tts?.error && (
-                  <p className="text-[9px] text-red-600 dark:text-red-400 truncate mb-2">
-                    {serviceTestResults.tts.error}
-                  </p>
-                )}
-                <button
-                  onClick={() => testSingleService("tts")}
-                  disabled={testingService.tts}
-                  className="w-full py-1.5 text-[10px] font-medium text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-900/30 hover:bg-rose-100 dark:hover:bg-rose-900/50 rounded flex items-center justify-center gap-1.5 transition-colors border border-rose-200 dark:border-rose-800 disabled:opacity-50"
-                >
-                  {testingService.tts ? (
-                    <Loader2 className="w-3 h-3 animate-spin" />
-                  ) : (
-                    <RefreshCw className="w-3 h-3" />
-                  )}
-                  {testingService.tts ? t("Testing...") : t("Test TTS")}
-                </button>
-              </div>
             </div>
           </div>
         </div>
@@ -1366,86 +1298,31 @@ export default function SettingsPage() {
               )}
             </div>
 
-            {/* Row 2: RAG Provider (Currently locked to RAG-Anything) */}
+            {/* Row 2: Research Tools (Web Search + Knowledge Base) */}
             <section className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
               <div className="px-4 py-3 border-b border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800/50 flex items-center gap-2">
-                <Database className="w-4 h-4 text-indigo-500 dark:text-indigo-400" />
+                <Search className="w-4 h-4 text-amber-500 dark:text-amber-400" />
                 <h2 className="font-semibold text-sm text-slate-900 dark:text-slate-100">
-                  {t("RAG Provider")}
+                  {t("Research Tools")}
                 </h2>
               </div>
-              <div className="p-4">
-                <div className="flex flex-col lg:flex-row lg:items-start gap-4">
-                  <div className="flex-1">
-                    <label className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">
-                      {t("Active RAG System")}
-                    </label>
-                    <p className="text-[10px] text-slate-400 dark:text-slate-500 mb-2">
-                      {t(
-                        "RAG-Anything provides end-to-end academic document processing with MinerU and LightRAG",
-                      )}
-                    </p>
-                    {loadingRagProviders ? (
-                      <div className="flex items-center gap-2 text-sm text-slate-500">
-                        <Loader2 className="w-4 h-4 animate-spin" />
-                        <span>Loading providers...</span>
-                      </div>
-                    ) : (
-                      <div className="w-full p-2 bg-slate-100 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-lg text-sm text-slate-700 dark:text-slate-300 flex items-center justify-between">
-                        <span>
-                          RAG-Anything - End-to-end academic document processing
-                          (MinerU + LightRAG)
-                        </span>
-                        <span className="text-[10px] px-2 py-0.5 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 rounded-full">
-                          Default
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                  <div className="lg:w-1/2 text-xs text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-700/50 p-3 rounded-lg border border-slate-100 dark:border-slate-600">
-                    <p>
-                      RAG-Anything combines MinerU for multimodal PDF parsing
-                      (images, tables, equations) with LightRAG for knowledge
-                      graph construction.
-                    </p>
-                    <p className="mt-1.5">
-                      <span className="font-medium text-slate-600 dark:text-slate-300">
-                        Supported modes:
-                      </span>{" "}
-                      hybrid, local, global, naive
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            {/* Row 3: Research Tools (Web Search + Knowledge Base) + TTS */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-              {/* Research Tools */}
-              <section className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
-                <div className="px-4 py-3 border-b border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800/50 flex items-center gap-2">
-                  <Search className="w-4 h-4 text-amber-500 dark:text-amber-400" />
-                  <h2 className="font-semibold text-sm text-slate-900 dark:text-slate-100">
-                    {t("Research Tools")}
-                  </h2>
-                </div>
-                <div className="p-4 grid grid-cols-2 gap-3">
-                  {/* Web Search */}
-                  <div className="p-3 bg-slate-50 dark:bg-slate-700/50 rounded-lg border border-slate-100 dark:border-slate-600">
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="text-xs font-medium text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
-                        <Globe className="w-3.5 h-3.5 text-blue-500" />
-                        {t("Web Search")}
-                      </span>
-                      <div className="relative inline-flex items-center cursor-pointer">
-                        <input
-                          type="checkbox"
-                          checked={
-                            editedConfig.tools?.web_search?.enabled ?? true
-                          }
-                          onChange={(e) =>
-                            handleConfigChange(
-                              "tools",
+              <div className="p-4 grid grid-cols-2 gap-3">
+                {/* Web Search */}
+                <div className="p-3 bg-slate-50 dark:bg-slate-700/50 rounded-lg border border-slate-100 dark:border-slate-600">
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="text-xs font-medium text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
+                      <Globe className="w-3.5 h-3.5 text-blue-500" />
+                      {t("Web Search")}
+                    </span>
+                    <div className="relative inline-flex items-center cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={
+                          editedConfig.tools?.web_search?.enabled ?? true
+                        }
+                        onChange={(e) =>
+                          handleConfigChange(
+                            "tools",
                               "enabled",
                               e.target.checked,
                               "web_search",
@@ -1529,53 +1406,6 @@ export default function SettingsPage() {
                   </div>
                 </div>
               </section>
-
-              {/* TTS Settings */}
-              <section className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
-                <div className="px-4 py-3 border-b border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800/50 flex items-center gap-2">
-                  <Volume2 className="w-4 h-4 text-rose-500 dark:text-rose-400" />
-                  <h2 className="font-semibold text-sm text-slate-900 dark:text-slate-100">
-                    {t("Text-to-Speech")}
-                  </h2>
-                </div>
-                <div className="p-4 grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-2">
-                      {t("Default Voice")}
-                    </label>
-                    <input
-                      type="text"
-                      value={editedConfig.tts?.default_voice || "Cherry"}
-                      onChange={(e) =>
-                        handleConfigChange(
-                          "tts",
-                          "default_voice",
-                          e.target.value,
-                        )
-                      }
-                      className="w-full p-2 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg text-sm text-slate-900 dark:text-slate-100"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-2">
-                      {t("Default Language")}
-                    </label>
-                    <input
-                      type="text"
-                      value={editedConfig.tts?.default_language || "English"}
-                      onChange={(e) =>
-                        handleConfigChange(
-                          "tts",
-                          "default_language",
-                          e.target.value,
-                        )
-                      }
-                      className="w-full p-2 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg text-sm text-slate-900 dark:text-slate-100"
-                    />
-                  </div>
-                </div>
-              </section>
-            </div>
           </div>
         )}
 

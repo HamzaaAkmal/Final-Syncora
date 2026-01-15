@@ -433,20 +433,38 @@ class AgentCoordinator:
 
     async def _single_rag_search(self, query: str) -> dict[str, Any]:
         """Execute a single RAG search and return the raw answer."""
+        # Skip RAG if no knowledge base is specified
+        if not self.kb_name or self.kb_name.strip() == "":
+            return {
+                "query": query,
+                "answer": "",
+                "mode": "none",
+                "skipped": True,
+            }
+        
         question_cfg = self.config.get("question", {})
         rag_mode = question_cfg.get("rag_mode", "hybrid")
 
-        result = await rag_search(
-            query=query,
-            kb_name=self.kb_name,
-            mode=rag_mode,
-            only_need_context=True,
-        )
-        return {
-            "query": query,
-            "answer": result.get("answer", ""),
-            "mode": result.get("mode", rag_mode),
-        }
+        try:
+            result = await rag_search(
+                query=query,
+                kb_name=self.kb_name,
+                mode=rag_mode,
+                only_need_context=True,
+            )
+            return {
+                "query": query,
+                "answer": result.get("answer", ""),
+                "mode": result.get("mode", rag_mode),
+            }
+        except Exception as e:
+            self.logger.warning(f"RAG search failed for query '{query[:50]}...': {e}")
+            return {
+                "query": query,
+                "answer": "",
+                "mode": rag_mode,
+                "error": str(e),
+            }
 
     async def _gather_retrieval_context(self, queries: list[str]) -> list[dict[str, Any]]:
         """Run retrieval for each query in parallel and collect the raw contexts."""
@@ -1641,17 +1659,35 @@ class AgentCoordinator:
 
     async def _single_rag_search_naive(self, query: str) -> dict[str, Any]:
         """Execute a single RAG search using naive mode."""
-        result = await rag_search(
-            query=query,
-            kb_name=self.kb_name,
-            mode="naive",
-            only_need_context=True,
-        )
-        return {
-            "query": query,
-            "answer": result.get("answer", ""),
-            "mode": "naive",
-        }
+        # Skip RAG if no knowledge base is specified
+        if not self.kb_name or self.kb_name.strip() == "":
+            return {
+                "query": query,
+                "answer": "",
+                "mode": "naive",
+                "skipped": True,
+            }
+        
+        try:
+            result = await rag_search(
+                query=query,
+                kb_name=self.kb_name,
+                mode="naive",
+                only_need_context=True,
+            )
+            return {
+                "query": query,
+                "answer": result.get("answer", ""),
+                "mode": "naive",
+            }
+        except Exception as e:
+            self.logger.warning(f"RAG search failed for query '{query[:50]}...': {e}")
+            return {
+                "query": query,
+                "answer": "",
+                "mode": "naive",
+                "error": str(e),
+            }
 
     async def _gather_retrieval_context_naive(self, queries: list[str]) -> list[dict[str, Any]]:
         """Run retrieval for each query in parallel using naive mode."""
@@ -2029,36 +2065,44 @@ class AgentCoordinator:
             },
         )
 
-        # Generate search queries
-        requirement_text = json.dumps(base_requirement, ensure_ascii=False)
-        queries = await self._generate_search_queries_from_text(
-            requirement_text, self.rag_query_count
-        )
-        self.logger.info(f"Generated {len(queries)} search queries: {queries}")
+        # Check if we have a knowledge base to search
+        has_kb = self.kb_name and self.kb_name.strip() != ""
+        
+        knowledge_summary = ""
+        queries = []
+        retrievals = []
+        
+        if has_kb:
+            # Generate search queries
+            requirement_text = json.dumps(base_requirement, ensure_ascii=False)
+            queries = await self._generate_search_queries_from_text(
+                requirement_text, self.rag_query_count
+            )
+            self.logger.info(f"Generated {len(queries)} search queries: {queries}")
 
-        await self._send_ws_update(
-            "progress",
-            {"stage": "researching", "progress": {"status": "retrieving"}, "queries": queries},
-        )
+            await self._send_ws_update(
+                "progress",
+                {"stage": "researching", "progress": {"status": "retrieving"}, "queries": queries},
+            )
 
-        # Retrieve using naive mode
-        retrievals = await self._gather_retrieval_context_naive(queries)
-        knowledge_summary = self._summarize_retrievals(retrievals)
+            # Retrieve using naive mode
+            retrievals = await self._gather_retrieval_context_naive(queries)
+            knowledge_summary = self._summarize_retrievals(retrievals)
 
-        # Check if we have any content
-        has_content = any(r.get("answer", "").strip() for r in retrievals)
-        if not has_content:
-            self.logger.warning("No content retrieved from knowledge base")
-            return {
-                "success": False,
-                "error": "knowledge_not_found",
-                "message": "Knowledge base does not contain relevant information for the request.",
-                "search_queries": queries,
-            }
+            # Check if we have any content from KB
+            has_content = any(r.get("answer", "").strip() for r in retrievals)
+            if not has_content:
+                self.logger.info("No content from KB, will use LLM knowledge for generation")
+                knowledge_summary = f"Topic: {base_requirement.get('knowledge_point', 'General topic')}\nUse your knowledge to generate questions about this topic."
 
-        # Save knowledge.json
-        if batch_dir:
-            self._save_knowledge_json(batch_dir, queries, retrievals)
+            # Save knowledge.json
+            if batch_dir:
+                self._save_knowledge_json(batch_dir, queries, retrievals)
+        else:
+            # No KB specified - use the topic directly for LLM-based generation
+            self.logger.info("No knowledge base specified, will use LLM knowledge for generation")
+            knowledge_point = base_requirement.get('knowledge_point', '')
+            knowledge_summary = f"Topic: {knowledge_point}\n\nGenerate questions based on your comprehensive knowledge about this topic. Create educational questions that test understanding of key concepts, principles, and applications."
 
         await self._send_ws_update(
             "progress", {"stage": "researching", "progress": {"status": "completed"}}

@@ -4,9 +4,11 @@
 Reference-based exam-question generation system
 
 Workflow:
-1. Parse the PDF exam (MinerU)
+1. Parse the PDF exam (PyPDF2 - RAG-based)
 2. Extract question information (LLM)
 3. Generate new questions per reference question (Agent)
+
+Note: This version uses PyPDF2 for PDF parsing instead of MinerU.
 """
 
 from __future__ import annotations
@@ -27,8 +29,9 @@ project_root = Path(__file__).parent.parent.parent.parent.parent
 sys.path.insert(0, str(project_root))
 
 # Note: AgentCoordinator is imported inside functions to avoid circular import
-from src.agents.question.tools.pdf_parser import parse_pdf_with_mineru
-from src.agents.question.tools.question_extractor import extract_questions_from_paper
+# Using RAG-based PDF parser (PyPDF2) instead of MinerU
+from src.agents.question.tools.pdf_parser_rag import parse_pdf_simple
+from src.agents.question.tools.question_extractor_rag import extract_questions_from_paper_rag
 
 # Type alias for WebSocket callback
 WsCallback = Callable[[str, dict[str, Any]], Any]
@@ -208,13 +211,13 @@ async def mimic_exam_questions(
 
     # If a PDF is provided, parse it first
     elif pdf_path:
-        # Stage 1: Parsing PDF
+        # Stage 1: Parsing PDF (using PyPDF2 instead of MinerU)
         await send_progress(
             "progress",
-            {"stage": "parsing", "status": "running", "message": "Parsing PDF with MinerU..."},
+            {"stage": "parsing", "status": "running", "message": "Parsing PDF with PyPDF2..."},
         )
 
-        print("🔄 Step 1: parse the PDF exam")
+        print("🔄 Step 1: parse the PDF exam (PyPDF2)")
         print("-" * 80)
 
         # Use provided output_dir or default to mimic_papers
@@ -225,10 +228,11 @@ async def mimic_exam_questions(
             output_base = project_root / "data" / "user" / "question" / "mimic_papers"
         output_base.mkdir(parents=True, exist_ok=True)
 
-        success = parse_pdf_with_mineru(pdf_path=pdf_path, output_base_dir=str(output_base))
+        # Use PyPDF2-based parser instead of MinerU
+        success, parsed_dir = parse_pdf_simple(pdf_path=pdf_path, output_base_dir=str(output_base))
 
-        if not success:
-            await send_progress("error", {"content": "Failed to parse PDF with MinerU"})
+        if not success or not parsed_dir:
+            await send_progress("error", {"content": "Failed to parse PDF"})
             return {"success": False, "error": "Failed to parse PDF"}
 
         print()
@@ -236,19 +240,8 @@ async def mimic_exam_questions(
         print("🔍 Step 2: locating parsed results")
         print("-" * 80)
 
-        # Look in the new output directory (user/question/mimic_papers)
-        reference_papers_dir = output_base
-        subdirs = sorted(
-            [d for d in reference_papers_dir.iterdir() if d.is_dir()],
-            key=lambda x: x.stat().st_mtime,
-            reverse=True,
-        )
-
-        if not subdirs:
-            await send_progress("error", {"content": "No parsed outputs were found"})
-            return {"success": False, "error": "No parsed outputs were found"}
-
-        latest_dir = subdirs[0]
+        # Use the parsed directory directly from parse_pdf_simple
+        latest_dir = parsed_dir
         print(f"✓ Parsed folder: {latest_dir.name}")
         print()
 
@@ -261,7 +254,7 @@ async def mimic_exam_questions(
             },
         )
 
-    # Stage 2: Extract questions
+    # Stage 2: Extract questions (using RAG-based extractor)
     await send_progress(
         "progress",
         {
@@ -282,7 +275,8 @@ async def mimic_exam_questions(
             questions_data = json.load(f)
     else:
         print("📄 No question file found, starting extraction...")
-        success = extract_questions_from_paper(paper_dir=str(latest_dir), output_dir=None)
+        # Use RAG-based question extractor instead of MinerU-based one
+        success = extract_questions_from_paper_rag(paper_dir=str(latest_dir), output_dir=None)
 
         if not success:
             await send_progress("error", {"content": "Question extraction failed"})

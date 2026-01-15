@@ -76,11 +76,15 @@ class RAGEngine:
         Returns:
             List of relevant documents
         """
+        print(f"[RAG_ENGINE] Generating query embedding for: '{query[:50]}...'")
         # Generate query embedding
         query_embedding = self.embedding_service.embed_text(query)
+        print(f"[RAG_ENGINE] Query embedding generated, dimension: {len(query_embedding)}")
         
         # Search vector DB
+        print(f"[RAG_ENGINE] Searching vector DB for collection: '{collection_name}'")
         results = self.vector_db.search(collection_name, query_embedding, top_k)
+        print(f"[RAG_ENGINE] Vector DB search complete, got {len(results)} results")
         
         return results
     
@@ -98,7 +102,7 @@ Question: {question}
 Answer:"""
 
         # Prepare payload
-        import json, tempfile, subprocess, sys
+        import json, tempfile, subprocess, sys, os
         project_root = Path(__file__).resolve().parents[3]
         worker = project_root / 'scripts' / 'flan_worker.py'
 
@@ -108,31 +112,57 @@ Answer:"""
         }
 
         try:
+            print(f"[RAG_ENGINE] Starting FLAN worker for question: {question[:50]}...")
+            
             with tempfile.NamedTemporaryFile('w', delete=False, suffix='.json') as tf:
                 json.dump(payload, tf)
                 tf.flush()
                 payload_path = tf.name
 
+            print(f"[RAG_ENGINE] Payload written to: {payload_path}")
             cmd = [sys.executable, str(worker), payload_path]
+            print(f"[RAG_ENGINE] Running command: {' '.join(cmd)}")
+            
             proc = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
+            
+            # Clean up temp file
+            try:
+                os.unlink(payload_path)
+            except:
+                pass
+            
+            print(f"[RAG_ENGINE] FLAN worker return code: {proc.returncode}")
+            
             if proc.returncode != 0:
                 err = proc.stderr or proc.stdout
+                print(f"[RAG_ENGINE] FLAN worker error: {err}")
                 raise RuntimeError(f"FLAN worker failed: {proc.returncode} - {err}")
 
+            print(f"[RAG_ENGINE] FLAN worker stdout: {proc.stdout[:200]}...")
             result = json.loads(proc.stdout.strip())
+            
             if 'generated_text' in result:
-                return result['generated_text'].strip()
+                answer = result['generated_text'].strip()
+                print(f"[RAG_ENGINE] Generated answer: {answer[:100]}...")
+                return answer
             else:
+                print(f"[RAG_ENGINE] Invalid response format: {result}")
                 raise RuntimeError(f"FLAN worker returned invalid response: {result}")
 
+        except subprocess.TimeoutExpired as e:
+            print(f"[RAG_ENGINE] FLAN worker timeout after 60s")
+            # Fallback to context
+            fallback = context[:400].strip()
+            return f"Based on the document: {fallback}... (Answer generation timed out)"
         except Exception as e:
             # Log and fallback to basic answer using context
+            print(f"[RAG_ENGINE] Error generating answer: {type(e).__name__}: {e}")
             try:
                 # Simple heuristic: return first 400 chars of context with a note
                 fallback = context[:400].strip()
-                return f"(Fallback) {fallback}"
+                return f"Based on the document: {fallback}..."
             except Exception:
-                return "(Fallback) Unable to generate answer at this time."
+                return "Unable to generate answer at this time. Please try again."
     
     def query(self, collection_name: str, question: str, top_k: int = 3) -> Dict[str, Any]:
         """
@@ -146,10 +176,16 @@ Answer:"""
         Returns:
             Answer with sources
         """
+        print(f"[RAG_ENGINE] Starting query: collection='{collection_name}', question='{question[:50]}...', top_k={top_k}")
+        
         # Retrieve relevant documents
+        print(f"[RAG_ENGINE] Retrieving documents...")
         retrieved_docs = self.retrieve(collection_name, question, top_k)
         
+        print(f"[RAG_ENGINE] Retrieved {len(retrieved_docs)} documents")
+        
         if not retrieved_docs:
+            print(f"[RAG_ENGINE] No documents found for query")
             return {
                 "answer": "No relevant documents found.",
                 "sources": [],
@@ -159,9 +195,12 @@ Answer:"""
         
         # Combine context
         context = "\n".join([doc['content'] for doc in retrieved_docs])
+        print(f"[RAG_ENGINE] Combined context length: {len(context)} chars")
         
         # Generate answer
+        print(f"[RAG_ENGINE] Generating answer...")
         answer = self.generate_answer(context, question)
+        print(f"[RAG_ENGINE] Answer generated successfully")
         
         return {
             "answer": answer,

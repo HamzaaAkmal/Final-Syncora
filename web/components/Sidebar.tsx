@@ -20,6 +20,7 @@ import {
   ChevronsLeft,
   ChevronsRight,
   LayoutDashboard,
+  FileText,
 } from "lucide-react";
 import { useGlobal } from "@/context/GlobalContext";
 import { getTranslation } from "@/lib/i18n";
@@ -44,6 +45,7 @@ export default function Sidebar() {
         { name: t("Dashboard"), href: "/dashboard", icon: LayoutDashboard },
         { name: t("History"), href: "/history", icon: History },
         { name: t("Knowledge Bases"), href: "/knowledge", icon: BookOpen },
+        { name: t("Notes Assistant"), href: "/notes-assistant", icon: FileText },
         { name: t("Notebooks"), href: "/notebook", icon: Book },
       ],
     },

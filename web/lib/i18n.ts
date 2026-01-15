@@ -12,6 +12,7 @@ export const translations = {
     "Co-Writer": "Co-Writer",
     "Guided Learning": "Guided Learning",
     "Knowledge Bases": "Knowledge Bases",
+    "Notes Assistant": "Notes Assistant",
     Notebooks: "Notebooks",
     Settings: "Settings",
 
@@ -146,6 +147,7 @@ export const translations = {
     "Co-Writer": "智能写作",
     "Guided Learning": "引导式学习",
     "Knowledge Bases": "知识库",
+    "Notes Assistant": "笔记助手",
     Notebooks: "笔记本",
     Settings: "设置",
 
@@ -274,6 +276,7 @@ export const translations = {
     "Co-Writer": "مل کر لکھیں",
     "Guided Learning": "رہنمائی سے سیکھیں",
     "Knowledge Bases": "علمی ذخائر",
+    "Notes Assistant": "نوٹس معاون",
     Notebooks: "نوٹ بکس",
     Settings: "ترتیبات",
 

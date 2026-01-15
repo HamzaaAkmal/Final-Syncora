@@ -161,7 +161,7 @@ async def websocket_mimic_generate(websocket: WebSocket):
                     {
                         "type": "status",
                         "stage": "parsing",
-                        "content": "Parsing PDF exam paper (MinerU)...",
+                        "content": "Parsing PDF exam paper...",
                     }
                 )
                 logger.info(f"Saved uploaded PDF to: {pdf_path}")

@@ -8,6 +8,7 @@ REST endpoints for PDF upload and Q&A using RAG.
 import uuid
 from pathlib import Path
 import sys
+import asyncio
 
 from fastapi import APIRouter, HTTPException, UploadFile, File, Form, BackgroundTasks
 from pydantic import BaseModel
@@ -164,16 +165,23 @@ async def query_rag(request: RAGQueryRequest):
         raise HTTPException(status_code=503, detail="RAG system not available")
     
     try:
-        result = rag_agent.answer_question(
+        logger.info(f"[RAG] Query received: '{request.question[:100]}...' on collection '{request.collection_name}'")
+        
+        # Run blocking operation in thread pool to avoid blocking event loop
+        result = await asyncio.to_thread(
+            rag_agent.answer_question,
             request.collection_name,
             request.question,
             request.top_k
         )
         
+        logger.info(f"[RAG] Query completed: got {'success' if result.get('success') else 'error'}")
+        
         if not result["success"]:
+            logger.error(f"[RAG] Query failed: {result.get('error', 'Unknown error')}")
             raise HTTPException(status_code=400, detail=result["error"])
         
-        logger.info(f"RAG query processed: {request.question[:50]}...")
+        logger.info(f"[RAG] Query processed: {request.question[:50]}...")
         
         # Save to history
         try:

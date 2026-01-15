@@ -155,32 +155,32 @@ class VectorDBService:
         Returns:
             List of similar documents
         """
-        # If Chroma collection exists, use it
-        if collection_name in self.collections:
-            collection = self.collections[collection_name]
-            results = collection.query(
-                query_embeddings=[query_embedding],
-                n_results=top_k
-            )
-            formatted = []
-            if results['documents'] and results['documents'][0]:
-                for i, doc in enumerate(results['documents'][0]):
-                    formatted.append({
-                        "content": doc,
-                        "metadata": results['metadatas'][0][i] if results['metadatas'] else {},
-                        "distance": results['distances'][0][i] if results['distances'] else 0
-                    })
-            return formatted
-
-        # Fallback: check for JSON-based storage
-        fallback_file = self.db_path / "fallback" / f"{collection_name}.json"
+        print(f"[VectorDB] Searching collection: '{collection_name}', top_k={top_k}")
+        print(f"[VectorDB] Cached collections: {list(self.collections.keys())}")
+        
+        # Sanitize collection name to match what was used during creation
+        sanitized = sanitize_collection_name(collection_name)
+        print(f"[VectorDB] Sanitized name: '{sanitized}'")
+        
+        # WORKAROUND: ChromaDB query hangs/crashes on Windows
+        # Use fallback JSON search by default
+        print(f"[VectorDB] Using fallback JSON search (ChromaDB query is unreliable)")
+        
+        # Try fallback JSON-based storage first
+        fallback_file = self.db_path / "fallback" / f"{sanitized}.json"
+        print(f"[VectorDB] Fallback file path: {fallback_file}")
+        
         if fallback_file.exists():
+            print(f"[VectorDB] Fallback file exists, loading...")
             try:
                 import json, numpy as np
                 data = json.loads(fallback_file.read_text())
+                print(f"[VectorDB] Loaded fallback data with {len(data.get('documents', []))} documents")
                 docs = data.get('documents', [])
                 if not docs:
+                    print(f"[VectorDB] No documents in fallback file")
                     return []
+                    
                 embeddings = np.array([d['embeddings'] for d in docs])
                 q = np.array(query_embedding)
                 # cosine similarity
@@ -194,10 +194,54 @@ class VectorDBService:
                         'metadata': docs[int(idx)].get('metadata', {}),
                         'distance': float(1.0 - float(sims[int(idx)]))
                     })
+                print(f"[VectorDB] Returning {len(results)} results from fallback")
                 return results
-            except Exception:
+            except Exception as e:
+                print(f"[VectorDB] Fallback search failed: {e}")
+                import traceback
+                traceback.print_exc()
+                # Don't return yet, try ChromaDB as last resort
+
+        # If fallback doesn't exist, try ChromaDB (with caution)
+        print(f"[VectorDB] Fallback not available, attempting ChromaDB (may hang)...")
+        
+        # If not in cache, try to load it from ChromaDB
+        if sanitized not in self.collections:
+            print(f"[VectorDB] Collection '{sanitized}' not in cache, attempting to load...")
+            try:
+                collection = self.client.get_collection(name=sanitized)
+                self.collections[sanitized] = collection
+                print(f"[VectorDB] Successfully loaded collection '{sanitized}' from ChromaDB")
+            except Exception as e:
+                print(f"[VectorDB] Failed to load collection '{sanitized}': {e}")
+                # Fall through to fallback logic below
+        
+        # If Chroma collection exists, use it
+        if sanitized in self.collections:
+            print(f"[VectorDB] Using ChromaDB collection '{sanitized}'")
+            collection = self.collections[sanitized]
+            try:
+                print(f"[VectorDB] Querying collection...")
+                results = collection.query(
+                    query_embeddings=[query_embedding],
+                    n_results=top_k
+                )
+                print(f"[VectorDB] Query returned {len(results.get('documents', [[]])[0])} results")
+                formatted = []
+                if results['documents'] and results['documents'][0]:
+                    for i, doc in enumerate(results['documents'][0]):
+                        formatted.append({
+                            "content": doc,
+                            "metadata": results['metadatas'][0][i] if results['metadatas'] else {},
+                            "distance": results['distances'][0][i] if results['distances'] else 0
+                        })
+                print(f"[VectorDB] Returning {len(formatted)} formatted results")
+                return formatted
+            except Exception as e:
+                print(f"[VectorDB] Error querying collection: {e}")
                 return []
 
+        print(f"[VectorDB] No results found for collection '{sanitized}'")
         return []
     
     def list_collections(self) -> List[str]:

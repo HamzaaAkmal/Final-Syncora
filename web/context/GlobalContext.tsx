@@ -299,7 +299,7 @@ export function GlobalProvider({ children }: { children: React.ReactNode }) {
   const [uiSettings, setUiSettings] = useState<{
     theme: "light" | "dark";
     language: "en" | "zh" | "ur";
-  }>({ theme: "light", language: "en" });
+  }>({ theme: "dark", language: "en" });
 
   const [isInitialized, setIsInitialized] = useState(false);
 

@@ -111,37 +111,73 @@ class QuestionGenerationAgent(BaseAgent):
         if not query:
             return Observation(success=False, result=None, message="Search query cannot be empty")
 
+        # Check if KB name is provided
+        if not self.kb_name:
+            # No KB specified - skip retrieval and use reference question context
+            _logger.info("No knowledge base specified, skipping RAG retrieval")
+            # Still add to retrieved_knowledge with empty answer to allow generation to proceed
+            self.retrieved_knowledge.append(
+                {
+                    "query": query,
+                    "answer": "No knowledge base specified. Using reference question context only.",
+                }
+            )
+            return Observation(
+                success=True, 
+                result={"answer": ""}, 
+                message="No knowledge base specified, proceeding with reference question context"
+            )
+
         # Get RAG mode from config
         question_cfg = self._config.get("question", {})
         rag_mode = question_cfg.get("rag_mode", "hybrid")
 
-        # Use unified RAG tool
-        result = await rag_search(
-            query=query,
-            kb_name=self.kb_name,
-            mode=rag_mode,
-            only_need_context=True,
-        )
+        try:
+            # Use unified RAG tool
+            result = await rag_search(
+                query=query,
+                kb_name=self.kb_name,
+                mode=rag_mode,
+                only_need_context=True,
+            )
 
-        answer = result.get("answer", "")
+            answer = result.get("answer", "")
 
-        # Save retrieved knowledge
-        self.retrieved_knowledge.append(
-            {
-                "query": query,
-                "answer": answer,
-            }
-        )
+            # Save retrieved knowledge
+            self.retrieved_knowledge.append(
+                {
+                    "query": query,
+                    "answer": answer,
+                }
+            )
 
-        # Summarize result
-        answer_len = len(answer) if answer else 0
-        summary = f"Retrieved context with {answer_len} characters for query: {query[:50]}..."
+            # Summarize result
+            answer_len = len(answer) if answer else 0
+            summary = f"Retrieved context with {answer_len} characters for query: {query[:50]}..."
 
-        return Observation(success=True, result={"answer": answer}, message=summary)
+            return Observation(success=True, result={"answer": answer}, message=summary)
+        
+        except Exception as e:
+            _logger.warning(f"RAG retrieval failed: {e}, proceeding without external knowledge")
+            # Allow generation to continue even if RAG fails
+            self.retrieved_knowledge.append(
+                {
+                    "query": query,
+                    "answer": f"RAG retrieval failed: {str(e)[:100]}. Using reference question context only.",
+                }
+            )
+            return Observation(
+                success=True,
+                result={"answer": ""},
+                message=f"RAG retrieval skipped due to error, proceeding with reference question"
+            )
 
     async def _action_generate_question(self) -> Observation:
         """Generate a question."""
-        if not self.retrieved_knowledge:
+        # Check if we have a reference question - if so, we don't strictly need retrieved knowledge
+        reference_question = self.current_requirement.get("reference_question") if self.current_requirement else None
+        
+        if not self.retrieved_knowledge and not reference_question:
             return Observation(
                 success=False, result=None, message="Run retrieve before generating a question"
             )
@@ -158,10 +194,7 @@ class QuestionGenerationAgent(BaseAgent):
                 knowledge_parts.append(answer)
             knowledge_parts.append("")
 
-        knowledge_str = "\n".join(knowledge_parts)
-
-        # Check whether a reference question exists
-        reference_question = self.current_requirement.get("reference_question")
+        knowledge_str = "\n".join(knowledge_parts) if knowledge_parts else "No external knowledge available."
 
         # Call LLM to generate the question
         if reference_question:
